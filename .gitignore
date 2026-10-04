@@ -1,0 +1,17 @@
+# Maven build artifacts
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
