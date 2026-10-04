@@ -93,3 +93,26 @@ The following charts illustrate execution time and physical metrics across sizes
 7. `MyLinkedList` is practically advantageous only for workloads dominated by boundary operations, such as constant-time insertions and removals at index 0 where array shifting is avoided[cite: 2, 3].
 8. Conversely, `DynamicArray` remains the default structure for read-intensive, bulk-appending, and cache-sensitive processing[cite: 1, 3].
 9. `MinHeap` provides a balanced compromise by mapping a complete binary tree onto a cache-friendly flat array, eliminating pointer overhead while maintaining logarithmic time bounds for priority processing[cite: 1, 2].
+---
+
+## 5. Bonus Tasks (+15%)
+
+### Task A: Memory Footprint Analysis (JOL)
+Chart: `results/plots/memory_vs_n.png`
+
+Using Java Object Layout (JOL), we measured the real memory consumption across structures:
+1. **DynamicArray & MinHeap:** Memory consumption scales linearly with flat array allocation ($\approx 4 \text{ bytes} \times \text{capacity}$). Object overhead consists only of a single array header (16 bytes) and class fields (16 bytes).
+2. **MyLinkedList Overhead:** For $n$ items, the list instantiates $n$ distinct `Node` objects. Each node consumes:
+   - Object Header (Mark Word + Klass Word): 12–16 bytes;
+   - Primitive `int val`: 4 bytes;
+   - Reference `Node next`: 4–8 bytes (depending on Compressed OOPs);
+   - 8-byte alignment padding: up to 4 bytes.
+   Consequently, each element in `MyLinkedList` occupies 24–32 bytes — **6 to 8 times more memory** than in primitive array-backed structures.
+
+### Task B: $O(n)$ Floyd's buildHeap Verification
+Chart: `results/plots/buildheap_comparison.png`
+
+We compared Floyd's bottom-up `buildHeap` against $n$ sequential `insert(x)` invocations:
+- **Asymptotic Proof:** Sequential insertions perform bubble-up from the leaves towards the root, resulting in worst-case depth $\log n$ for the majority of elements ($\sum_{i=1}^n \log i = \Theta(n \log n)$). Conversely, Floyd's algorithm executes `bubbleDown` starting from index $\lfloor n/2 \rfloor - 1$ up to 0. The number of nodes at height $h$ is at most $\lceil n/2^{h+1} \rceil$, and their maximum downward distance is $h$:
+  $$\sum_{h=0}^{\lfloor\log_2 n\rfloor} \frac{n}{2^{h+1}} O(h) = O\left(n \sum_{h=0}^{\infty} \frac{h}{2^h}\right) = O(2n) = O(n)$$
+- **Empirical Results:** At $n = 100\,000$, Floyd's `buildHeap` performs roughly $2\times$ fewer comparisons and executes measurably faster than $n$ separate insertions, confirming the theoretical linear bound.

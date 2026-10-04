@@ -103,10 +103,22 @@ public class MinHeap {
         return size;
     }
 
-    // Вспомогательный метод для проверки инварианта в тестах
     public int[] getInternalArray() {
         int[] copy = new int[size];
         System.arraycopy(heap, 0, copy, 0, size);
         return copy;
+    }
+
+    public static MinHeap buildHeap(int[] array) {
+        MinHeap h = new MinHeap();
+        h.heap = new int[Math.max(array.length, 16)];
+        System.arraycopy(array, 0, h.heap, 0, array.length);
+        h.size = array.length;
+        Metrics.moves += array.length;
+
+        for (int i = (h.size / 2) - 1; i >= 0; i--) {
+            h.bubbleDown(i);
+        }
+        return h;
     }
 }

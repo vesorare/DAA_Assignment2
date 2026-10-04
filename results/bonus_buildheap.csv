@@ -1,0 +1,9 @@
+method,n,time_ms,comparisons,moves,steps
+n_inserts,100,0,206,438,750
+floyd_buildHeap,100,0,177,240,494
+n_inserts,1000,0,2326,4680,8332
+floyd_buildHeap,1000,0,1900,2482,5282
+n_inserts,10000,0,22753,51910,87416
+floyd_buildHeap,10000,0,18772,24848,52392
+n_inserts,100000,1,227857,486812,842526
+floyd_buildHeap,100000,0,187911,248330,524152
