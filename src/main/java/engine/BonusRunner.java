@@ -34,10 +34,9 @@ public class BonusRunner {
                 long listBytes = GraphLayout.parseInstance(list).totalSize();
                 long heapBytes = GraphLayout.parseInstance(heap).totalSize();
 
-                out.printf("DynamicArray,%d,%d,%.4f%n", n, arrBytes, arrBytes / (1024.0 * 1024.0));
-                out.printf("MyLinkedList,%d,%d,%.4f%n", n, listBytes, listBytes / (1024.0 * 1024.0));
-                out.printf("MinHeap,%d,%d,%.4f%n", n, heapBytes, heapBytes / (1024.0 * 1024.0));
-            }
+                out.printf(java.util.Locale.US, "DynamicArray,%d,%d,%.6f%n", n, arrBytes, arrBytes / (1024.0 * 1024.0));
+                out.printf(java.util.Locale.US, "MyLinkedList,%d,%d,%.6f%n", n, listBytes, listBytes / (1024.0 * 1024.0));
+                out.printf(java.util.Locale.US, "MinHeap,%d,%d,%.6f%n", n, heapBytes, heapBytes / (1024.0 * 1024.0));            }
         }
         System.out.println("Memory results saved to results/bonus_memory.csv");
     }

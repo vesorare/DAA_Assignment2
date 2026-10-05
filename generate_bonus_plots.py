@@ -1,11 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# 1. График Memory (MB) vs n (Task A)
+# 1. Task A: Memory vs n
 df_mem = pd.read_csv('results/bonus_memory.csv')
 plt.figure(figsize=(8, 5))
-for s in df_mem['structure'].unique():
-    sub = df_mem[df_mem['structure'] == s]
+for s in ['DynamicArray', 'MyLinkedList', 'MinHeap']:
+    sub = df_mem[df_mem['structure'] == s].sort_values('n')
     plt.plot(sub['n'], sub['memory_mb'], marker='o', label=s)
 
 plt.xscale('log')
@@ -18,11 +18,11 @@ plt.grid(True, which="both", ls="--")
 plt.savefig('results/plots/memory_vs_n.png')
 plt.close()
 
-# 2. График Floyd buildHeap vs n Inserts (Task B)
+# 2. Task B: Floyd vs n Inserts
 df_heap = pd.read_csv('results/bonus_buildheap.csv')
 plt.figure(figsize=(8, 5))
 for m in df_heap['method'].unique():
-    sub = df_heap[df_heap['method'] == m]
+    sub = df_heap[df_heap['method'] == m].sort_values('n')
     label_text = "Floyd O(n)" if m == "floyd_buildHeap" else "n Inserts O(n log n)"
     plt.plot(sub['n'], sub['comparisons'], marker='s', label=f'{label_text} (comparisons)')
 
@@ -36,4 +36,4 @@ plt.grid(True, which="both", ls="--")
 plt.savefig('results/plots/buildheap_comparison.png')
 plt.close()
 
-print("Bonus plots generated successfully in results/plots/")
+print("Bonus plots regenerated successfully.")
